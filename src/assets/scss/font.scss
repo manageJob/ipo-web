@@ -1,0 +1,79 @@
+// Regular
+@font-face {
+  font-family: 'DB-HelvethaicaMon-X';
+  src: local('DB-HelvethaicaMon-X'),
+    url('../fonts/DB-HelvethaicaMon-X.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+// Regular Italic
+@font-face {
+  font-family: 'DB-HelvethaicaMon-X-It';
+  src: local('DB-HelvethaicaMon-X-It'),
+    url('../fonts/DB-HelvethaicaMon-X-It.ttf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+// Semi Bold
+@font-face {
+  font-family: 'DB-HelvethaicaMon-X-Med';
+  src: local('DB-HelvethaicaMon-X-Med'),
+    url('../fonts/DB-HelvethaicaMon-X-Med.ttf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+// Semi Bold Italic
+@font-face {
+  font-family: 'DB-HelvethaicaMon-X-Med-It';
+  src: local('DB-HelvethaicaMon-X-Med-It'),
+    url('../fonts/DB-HelvethaicaMon-X-Med-It.ttf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+// Bold
+@font-face {
+  font-family: 'DB-HelvethaicaMon-X-Bd';
+  src: local('DB-HelvethaicaMon-X-Bd'),
+    url('../fonts/DB-HelvethaicaMon-X-Bd.ttf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+// Bold Italic
+@font-face {
+  font-family: 'DB-HelvethaicaMon-X-Bd-It';
+  src: local('DB-HelvethaicaMon-X-Bd-It'),
+    url('../fonts/DB-HelvethaicaMon-X-Bd-It.ttf') format('opentype');
+  font-weight: 600;
+  font-style: italic;
+}
+
+// Extra Bold
+@font-face {
+  font-family: 'DB-HelvethaicaMon-X-Blk';
+  src: local('DB-HelvethaicaMon-X-Blk'),
+    url('../fonts/DB-HelvethaicaMon-X-Blk.ttf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+// Extra Bold Italic
+@font-face {
+  font-family: 'DB-HelvethaicaMon-X-Blk-It';
+  src: local('DB-HelvethaicaMon-X-Blk-It'),
+    url('../fonts/DB-HelvethaicaMon-X-Blk-It.ttf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+* {
+  font-weight: normal;
+  font-style: normal;
+  letter-spacing: 0.4px;
+  font-family: 'DB-HelvethaicaMon-X';
+  font-size: 20px;
+}

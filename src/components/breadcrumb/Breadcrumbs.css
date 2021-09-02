@@ -1,0 +1,25 @@
+.breadcrumb {
+  background-color: #0078b9;
+  border-bottom: '0';
+  padding: 12px;
+}
+
+.breadcrumb-name {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.icon {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.ant-breadcrumb > span:last-child {
+  color: white;
+  cursor: default;
+}
+
+.ant-breadcrumb {
+  color: black;
+}

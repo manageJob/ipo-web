@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Login from './login/Login';
+import ValidateToken from './components/authen/validate-token/ValidateToken';
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    
   </React.StrictMode>,
   document.getElementById('root')
 );

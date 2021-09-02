@@ -1,9 +1,10 @@
-import { httpClient } from "./http-client";
+import { httpClient } from "../../api/http-client";
 
 
-const GetHello = (id: number) => {
+
+const Authenticate = (data: any) => {
     return httpClient
-        .get(`/getUser/${id}`)
+        .post(`/authenticate`, data)
         .then((res: any) => {
             if (res.status === 200) {
                 return res;
@@ -26,4 +27,4 @@ const GetHello = (id: number) => {
     
   // }
 
-export default GetHello;
+export default Authenticate;

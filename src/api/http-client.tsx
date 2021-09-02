@@ -2,35 +2,37 @@ import axios from 'axios';
 import { Token } from '../models/token.model';
 
 const instance = axios.create({
-  baseURL: 'https://manage-ipo-api.herokuapp.com',
+  baseURL: 'https://manage-ipo-api.herokuapp.com/',
 });
 
 instance.interceptors.request.use(
   (config) => {
-    // const localStorageToken = localStorage.getItem('antToken');
-    if (true) {
-      // const token: Token = {};
-     // Object.assign(token, JSON.parse(localStorageToken));
-      config.headers['Authorization'] = `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyOTUxMTg3NCwiaWF0IjoxNjI5NDc1ODc0fQ.WlLGYNz8-jBxeaTWcm5wROiI3GwMX-ygoDsX8jYflA0SEfW5-Ysc1ac1d-FWR00RDgCp6Kf_nUYiFbR-qtut1w`;
+    document.body.classList.add('loading-indicator')
+    const localStorageToken = localStorage.getItem('ipoToken');
+    if (localStorageToken) {
+      const token: Token = {};
+      Object.assign(token, JSON.parse(localStorageToken));
+      config.headers['Authorization'] = `Bearer ${token.access_token}`;
     }
-
     return config;
   },
   (error) => {
+    document.body.classList.remove('loading-indicator');
     Promise.reject(error);
   }
-
 );
 
 
 instance.interceptors.response.use(
   (response) => {
+     document.body.classList.remove('loading-indicator');
     return response;
   },
   (err) => {
+    document.body.classList.remove('loading-indicator');
     return new Promise((resolve, reject) => {
       const originalReq = err.config;
-      const localStorageToken = localStorage.getItem('antToken');
+      const localStorageToken = localStorage.getItem('ipoToken');
       if (
         err.response.status === 401 &&
         err.config &&
@@ -55,15 +57,15 @@ instance.interceptors.response.use(
               return res.json();
             }
             originalReq._retry = false;
-            localStorage.removeItem(`antToken`);
-            window.open(`${process.env.REACT_APP_ANT_WEB_LOGIN}`, '_self');
+            localStorage.removeItem(`ipoToken`);
+            window.open('https://manage-ipo-api.herokuapp.com/', '_self');
           })
           .then((res) => {
             const dataToken = {
               access_token: res.access_token,
               refresh_token: res.refresh_token,
             };
-            localStorage.setItem(`antToken`, JSON.stringify(dataToken));
+            localStorage.setItem(`ipoToken`, JSON.stringify(dataToken));
             return instance(originalReq);
           });
         resolve(res);

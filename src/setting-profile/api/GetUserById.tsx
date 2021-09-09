@@ -1,8 +1,9 @@
 import { httpClient } from "../../api/http-client";
 
-const Authenticate = (data: any) => {
+
+const GetUserById = (userId: string) => {
     return httpClient
-        .post(`/authenticate`, data)
+        .get(`/setting/${userId}`)
         .then((res: any) => {
             if (res.status === 200) {
                 return res;
@@ -10,4 +11,4 @@ const Authenticate = (data: any) => {
         })
 };
 
-export default Authenticate;
+export default GetUserById;

@@ -11,19 +11,4 @@ const GetHello = (id: number) => {
         })
 };
 
-  // const onExport = () => {
-  //   console.log('Start');
-    
-  //   GetHello(5)
-  //       .then((res: any) => {
-  //         console.log(res?.data, "-ssss");
-  //       })
-  //       .catch((err) => {
-        
-  //       });
-
-  //       console.log('End');
-    
-  // }
-
 export default GetHello;

@@ -7,6 +7,8 @@
   float: left;
 }
 
+
+
 .logo {
   display: inline-block;
   width: 175px;
@@ -28,5 +30,34 @@
     0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
   z-index: 999;
   padding: 0;
+}
+
+.btn-custom {
+  background-color: #0078d4;
+  border: 0;
+  min-width: 50px;
+  position: absolute;
+  font-size: 1.125rem;
+  height: 2.7rem;
+  color: white;
+}
+
+
+.container-fluid {
+  width: 100%;
+  padding: 20px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.bottom-action {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    padding: 10px 30px;
+    text-align: right;
+    background-color: #fff;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
 }
 

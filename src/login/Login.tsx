@@ -1,19 +1,17 @@
-import { Button, Card, Col, Form, Input, Row, Spin } from "antd"
+import { Alert, Button, Card, Form, Input, notification, Row, Spin } from "antd"
 import { useForm } from "antd/lib/form/Form";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './login.css';
 import { useState } from "react";
-import { BrowserRouter as Router, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Layout from "../components/layout/Layout";
 import ContextProvider from "../context/ContextItems";
-import Breadcrumbs from "../components/breadcrumb/Breadcrumbs";
 import { ToastContainer } from 'react-toastify';
 import Routes from "../routes/Routes";
 import Authenticate from "./api/Authenticate";
 
 const Login: React.FC = () => {
     const [form] = useForm()
-    const history = useHistory()
     const [isLogin, setIsLogin] = useState<boolean>(false);
 
     const prepareData = () => {
@@ -21,11 +19,12 @@ const Login: React.FC = () => {
         return param;
     }
 
-    const validateToken = (accessToken: string) => {
+    const validateToken = (accessToken: any) => {
         var dataToken = {
-            'access_token': accessToken
+            'access_token': accessToken.token
         }
         localStorage.setItem(`ipoToken`, JSON.stringify(dataToken));
+        localStorage.setItem(`userId`, accessToken.userId);
         setIsLogin(true);
     }
 
@@ -35,8 +34,16 @@ const Login: React.FC = () => {
                 validateToken(res?.data);
             })
             .catch((err) => {
-
+                openNotificationWithError();
             });
+    };
+
+    const openNotificationWithError = () => {
+        notification['error']({
+            message: 'Error',
+            description:
+                'Username or password is incorrect.',
+        });
     };
 
 
@@ -77,13 +84,11 @@ const Login: React.FC = () => {
             }
             {isLogin &&
                 <Router>
-                    <Layout>
-                        <ContextProvider>
-                            <Breadcrumbs />
-                            <ToastContainer />
+                    <ContextProvider>
+                        <Layout>
                             <Routes />
-                        </ContextProvider>
-                    </Layout>
+                        </Layout>
+                    </ContextProvider>
                 </Router>
             }
         </>

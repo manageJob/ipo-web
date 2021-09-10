@@ -1,4 +1,4 @@
-import { HomeTwoTone, SettingTwoTone } from '@ant-design/icons'
+import { HomeOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -30,12 +30,18 @@ const SideMenu: React.FC = () => {
       <Menu.Item
         key='main'
         onClick={() => onClickMenu('main')}
-        icon={<HomeTwoTone />}>
+        icon={<HomeOutlined />}>
         <label className="text-sm">Main</label>
       </Menu.Item>
       <Menu.Item
+        key='manage-user'
+        icon={<UserOutlined />}
+        onClick={() => onClickMenu('manage-user')}>
+        <label className="text-sm">Manage User</label>
+      </Menu.Item>
+      <Menu.Item
         key='setting'
-        icon={<SettingTwoTone />}
+        icon={<SettingOutlined />}
         onClick={() => onClickMenu('setting')}>
         <label className="text-sm">Setting</label>
       </Menu.Item>

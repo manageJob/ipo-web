@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Resizable } from 'react-resizable';
+import DeleteManageUser from './api/DeleteManageUser';
 
 const initColumns: any[] = [
   {
@@ -27,6 +28,18 @@ const initColumns: any[] = [
     sorter: (a: any, b: any) => {
       a = a.lastname || '';
       b = b.lastname || '';
+      return a.localeCompare(b);
+    },
+  },
+  {
+    title: 'Username',
+    dataIndex: 'username',
+    key: 'username',
+    fixed: 'left',
+    width: 200,
+    sorter: (a: any, b: any) => {
+      a = a.username || '';
+      b = b.username || '';
       return a.localeCompare(b);
     },
   },
@@ -148,23 +161,23 @@ function ManageUserTable(props: {
     confirm({
       title: 'Do you want to delete this dw new list config?',
       onOk() {
-        // return new Promise((resolve, reject) => {
-        //   setProgress(20);
-        //   DeleteDWNewListConfig(selectedDeleteData)
-        //     .then(resolve)
-        //     .catch((err: any) => reject(err));
-        // })
-        //   .then(() => {
-        //     setProgress(100);
-        //     notifySuccess();
-        //     onDeleted();
-        //     setSelectedDeleteData([]);
-        //     setSelectedRowKeys([]);
-        //   })
-        //   .catch((err) => {
-        //     setProgress(100);
-        //     notifyError(err.data.errorMessage);
-        //   });
+        return new Promise((resolve, reject) => {
+          setProgress(20);
+          DeleteManageUser(selectedDeleteData)
+            .then(resolve)
+            .catch((err: any) => reject(err));
+        })
+          .then(() => {
+            setProgress(100);
+            notifySuccess();
+            onDeleted();
+            setSelectedDeleteData([]);
+            setSelectedRowKeys([]);
+          })
+          .catch((err) => {
+            setProgress(100);
+            notifyError(err.data.errorMessage);
+          });
       },
     });
   };
@@ -232,7 +245,7 @@ function ManageUserTable(props: {
           scroll={{ x: 1300 }}
           onRow={(r) => ({
             onClick: () => {
-              history.push(`/dw-new-list-config-detail`, { id: r.id });
+              history.push(`/manage-user-detail`, { id: r.id });
             },
           })}
         />

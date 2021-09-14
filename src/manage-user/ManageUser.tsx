@@ -42,6 +42,7 @@ const ManageUser: React.FC = () => {
       };
 
     const onDeleted = () => {
+        search();
     };
 
     const onNewUser = () => history.push('/manage-user-detail');
@@ -90,10 +91,7 @@ const ManageUser: React.FC = () => {
                                 </Form.Item>
                             </Col>
                         </Row>
-
-
                     </Card>
-
                 </Form>
                 <ManageUserTable
                     data={dataTable}

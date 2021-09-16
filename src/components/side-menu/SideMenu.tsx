@@ -1,4 +1,4 @@
-import { HomeOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
+import { HomeOutlined, SettingOutlined, UserOutlined, FileTextOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -32,6 +32,12 @@ const SideMenu: React.FC = () => {
         onClick={() => onClickMenu('main')}
         icon={<HomeOutlined />}>
         <label className="text-sm">Main</label>
+      </Menu.Item>
+      <Menu.Item
+        key='news'
+        icon={<FileTextOutlined />}
+        onClick={() => onClickMenu('news')}>
+        <label className="text-sm">News</label>
       </Menu.Item>
       <Menu.Item
         key='manage-user'

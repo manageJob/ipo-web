@@ -1,9 +1,9 @@
 import { httpClient } from "../../api/http-client";
 
-const DeleteManageUser = (id: number[]) => {
+const DeleteNews = (id: number[]) => {
     return new Promise((resolve, reject) => {
         httpClient
-        .delete(`/manage-user?ids=${id}`)
+        .delete(`/news?ids=${id}`)
         .then(res => {
             if (res.status === 200) {
                 return resolve(res);
@@ -13,4 +13,4 @@ const DeleteManageUser = (id: number[]) => {
     });
 };
 
-export default DeleteManageUser;
+export default DeleteNews;

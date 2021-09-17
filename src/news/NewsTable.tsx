@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Resizable } from 'react-resizable';
-import DeleteManageUser from './api/DeleteManageUser';
+import DeleteNews from './api/DeleteNews';
 
 const initColumns: any[] = [
   {
@@ -102,11 +102,11 @@ function NewsTable(props: {
 
   const onConfirmDelete = () => {
     confirm({
-      title: 'Do you want to delete this dw new list config?',
+      title: 'Do you want to delete this news?',
       onOk() {
         return new Promise((resolve, reject) => {
           setProgress(20);
-          DeleteManageUser(selectedDeleteData)
+          DeleteNews(selectedDeleteData)
             .then(resolve)
             .catch((err: any) => reject(err));
         })
@@ -188,7 +188,7 @@ function NewsTable(props: {
           scroll={{ x: 1300 }}
           onRow={(r) => ({
             onClick: () => {
-              history.push(`/manage-user-detail`, { id: r.id });
+              history.push(`/news-detail`, { id: r.id });
             },
           })}
         />

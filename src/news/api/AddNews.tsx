@@ -1,11 +1,11 @@
 import { httpClient } from "../../api/http-client";
-import { User } from "../news.model";
+import { News } from "../news.model";
 
 
-const AddManageUser = (data: User) => {
+const AddNews = (data: News) => {
     return new Promise((resolve, reject) => {
         httpClient
-            .post(`/manage-user`, data)
+            .post(`/news`, data)
             .then(res => {
                 if (res.status === 200) {
                     return resolve(res);
@@ -15,4 +15,4 @@ const AddManageUser = (data: User) => {
     })
 };
 
-export default AddManageUser;
+export default AddNews;

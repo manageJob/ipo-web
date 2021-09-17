@@ -159,7 +159,7 @@ function ManageUserTable(props: {
 
   const onConfirmDelete = () => {
     confirm({
-      title: 'Do you want to delete this dw new list config?',
+      title: 'Do you want to delete this user?',
       onOk() {
         return new Promise((resolve, reject) => {
           setProgress(20);

@@ -1,9 +1,10 @@
 import { httpClient } from "../../api/http-client";
+import { News } from "../news.model";
 
-const ResetUserPassword = (id: string) => {
+const GetNews = (id: string) => {
     return new Promise((resolve, reject) => {
         httpClient
-            .put(`/manage-user/reset-password/${id}`)
+            .get<News>(`/news/${id}`)
             .then((res: any) => {
                 if (res.status === 200) {
                     return resolve(res);
@@ -13,4 +14,4 @@ const ResetUserPassword = (id: string) => {
     });
 };
 
-export default ResetUserPassword;
+export default GetNews;

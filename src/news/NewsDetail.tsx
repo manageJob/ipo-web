@@ -1,17 +1,15 @@
-import { AutoComplete, Button, Card, Col, Form, Input, Modal, notification, Popconfirm, Row, Select } from 'antd';
+import { Button, Card, Col, Form, Input, Modal, notification, Row  } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import { ContextItems } from '../context/ContextItems';
 import { useForm } from 'antd/lib/form/Form';
-import { formLeftLayout, formModelLayout, formRightLayout, inputGroupLayout, inputGroupModel } from './NewsLayout';
-import { LocationParam, User } from './news.model';
+import { formLeftLayout, formRightLayout, inputGroupLayout } from './NewsLayout';
+import { LocationParam, News } from './news.model';
 import { DropDrown } from '../models/DropDrown.model';
 import Axios from 'axios';
-import GetRole from './api/GetRole';
-import AddManageUser from './api/AddManageUser';
+import AddNews from './api/AddNews';
 import { useHistory, useLocation } from 'react-router-dom';
-import GetManageUser from './api/GetManageUser';
-import ResetUserPassword from './api/ResetUserPassword';
-import UpdateManageUser from './api/UpdateManageUser';
+import GetNews from './api/GetNews';
+import UpdateNews from './api/UpdateNews';
 import TextArea from 'antd/lib/input/TextArea';
 
 const ManageUserDetail: React.FC = () => {
@@ -24,23 +22,9 @@ const ManageUserDetail: React.FC = () => {
     const [form] = useForm();
     const history = useHistory();
 
-
-    useEffect(() => {
-        // setBreadcrumbItems(breadcrumb)
-        Axios.all([GetRole()])
-            .then(
-                Axios.spread((...res) => {
-                    setRole(res[0]?.data ? res[0].data : []);
-                })
-            )
-            .catch((errors) => {
-                openNotificationError('failed')
-            });
-    }, [])
-
     useEffect(() => {
         if (locationState?.id) {
-            GetManageUser(locationState.id)
+            GetNews(locationState.id)
                 .then((res: any) => {
                     populateData(res?.data);
                 })
@@ -50,17 +34,17 @@ const ManageUserDetail: React.FC = () => {
         }
     }, [locationState]); // eslint-disable-line
 
-    const populateData = (data: User) => {
+    const populateData = (data: News) => {
         form.setFieldsValue({
-            username: data.username,
-            role: data.roleId,
+            name: data.name,
+            detail: data.detail,
         });
     };
 
     const prepareData = (data: any) => {
-        const userInfo: User = {
-            username: data.username,
-            roleId: data.role
+        const userInfo: News = {
+            name: data.name,
+            detail: data.detail,
         };
         return userInfo;
     };
@@ -68,16 +52,16 @@ const ManageUserDetail: React.FC = () => {
     const onSave = (data: any) => {
         if (!locationState?.id) {
             confirm({
-                title: 'Do you want to new this user?',
+                title: 'Do you want to new this news?',
                 onOk() {
                     return new Promise((resolve, reject) => {
-                        AddManageUser(prepareData(data))
+                        AddNews(prepareData(data))
                             .then(resolve)
                             .catch((err) => reject(err));
                     })
                         .then(() => {
                             openNotificationSuccess();
-                            history.push('manage-user');
+                            history.push('news');
                         })
                         .catch((err) => {
                             openNotificationError('failed');
@@ -87,16 +71,16 @@ const ManageUserDetail: React.FC = () => {
             });
         } else {
             confirm({
-                title: 'Do you want to update this user?',
+                title: 'Do you want to update this news?',
                 onOk() {
                     return new Promise((resolve, reject) => {
-                        UpdateManageUser(locationState?.id, prepareData(data))
+                        UpdateNews(locationState?.id, prepareData(data))
                             .then(resolve)
                             .catch((err) => reject(err));
                     })
                         .then(() => {
                             openNotificationSuccess();
-                            history.push('manage-user');
+                            history.push('news');
                         })
                         .catch((err) => {
                             openNotificationError('failed');
@@ -106,27 +90,6 @@ const ManageUserDetail: React.FC = () => {
             });
         }
     }
-
-    const resetPassword = () => {
-        if (locationState?.id) {
-            return new Promise((resolve, reject) => {
-                ResetUserPassword(locationState?.id)
-                    .then(resolve)
-                    .catch((err) => reject(err));
-            })
-                .then(() => {
-                    openNotificationSuccess();
-                    history.push('manage-user');
-                })
-                .catch((err) => {
-                    openNotificationError('failed');
-                });
-        }
-    }
-    const onShowModelChangePassword = () => {
-        setIsDisabledModel(false);
-    }
-
 
     const openNotificationSuccess = () => {
         notification['success']({
@@ -152,15 +115,15 @@ const ManageUserDetail: React.FC = () => {
                             <Col {...formLeftLayout}>
                                 <Form.Item
                                     {...inputGroupLayout}
-                                    label='username'
-                                    name='username'
+                                    label='name'
+                                    name='name'
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Please input your username!',
+                                            message: 'Please input your name!',
                                         },
                                     ]}>
-                                    <Input id='username' />
+                                    <Input id='name' />
                                 </Form.Item>
                             </Col>
                             <Col {...formRightLayout}>
@@ -177,22 +140,6 @@ const ManageUserDetail: React.FC = () => {
                                     <TextArea rows={1} />
                                 </Form.Item>
                             </Col>
-                            {locationState?.id && (
-                                <Col {...formLeftLayout}>
-                                    <Form.Item
-                                        {...inputGroupLayout}
-                                        label='password'
-                                        name='password'>
-                                        <Popconfirm
-                                            title="Are you sure to reset password?"
-                                            onConfirm={resetPassword}
-                                            okText="Yes"
-                                            cancelText="No">
-                                            <a>reset password</a>
-                                        </Popconfirm>
-                                    </Form.Item>
-                                </Col>
-                            )}
                         </Row>
 
                         <div className="bottom-action">

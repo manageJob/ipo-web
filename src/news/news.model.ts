@@ -1,14 +1,8 @@
 import { BreadcrumbPath } from "../models/breadcrumb.model";
 
-export interface User {
-  // name: string
-  // lastname: string
-  username: string
-  // password?: string
-  // telephoneNumber: string
-  // bankName: string
-  // bankNumber: string
-  roleId: string;
+export interface News {
+  name: string
+  detail: string;
 }
 
 export interface LocationParam {

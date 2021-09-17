@@ -1,10 +1,10 @@
 import { httpClient } from "../../api/http-client";
-import { User } from "../news.model";
+import { News } from "../news.model";
 
-const UpdateManageUser = (id: string, data: User) => {
+const UpdateNews = (id: string, data: News) => {
     return new Promise((resolve, reject) => {
         httpClient
-            .put(`/manage-user/${id}`, data)
+            .put(`/news/${id}`, data)
             .then((res: any) => {
                 if (res.status === 200) {
                     return resolve(res);
@@ -14,4 +14,4 @@ const UpdateManageUser = (id: string, data: User) => {
     });
 };
 
-export default UpdateManageUser;
+export default UpdateNews;

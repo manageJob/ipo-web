@@ -1,5 +1,8 @@
 import { Route, Switch } from 'react-router-dom'
 import ValidateToken from '../components/authen/validate-token/ValidateToken'
+import DepositDetail from '../components/deposit-withdraw/DepositDetail'
+import DepositWithdraw from '../components/deposit-withdraw/DepositWithdraw'
+import WithdrawDetail from '../components/deposit-withdraw/WithdrawDetail'
 import ManageUser from '../manage-user/ManageUser'
 import ManageUserDetail from '../manage-user/ManageUserDetail'
 import News from '../news/News'
@@ -18,6 +21,15 @@ const Routes: React.FC = () => {
             </Route>
             <Route key='manageUser' path='/manage-user'>
                 <ManageUser />
+            </Route>
+            <Route key='depositWithdraw' path='/deposit-withdraw'>
+                <DepositWithdraw />
+            </Route>
+            <Route key='depositDetail' path='/deposit-detail'>
+                <DepositDetail />
+            </Route>
+            <Route key='withdrawDetail' path='/withdraw-detail'>
+                <WithdrawDetail />
             </Route>
             <Route key='manageUserDetail' path='/manage-user-detail'>
                 <ManageUserDetail />

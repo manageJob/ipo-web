@@ -54,6 +54,7 @@ const SettingProfile: React.FC = () => {
             username: data.username,
             telephoneNumber: data.telephoneNumber,
             bankName: data.bankName,
+            bankAccountName: data.bankAccountName,
             bankNumber: data.bankNumber
         });
     };
@@ -65,6 +66,7 @@ const SettingProfile: React.FC = () => {
             username: data.username,
             telephoneNumber: data.telephoneNumber,
             bankName: data.bankName,
+            bankAccountName: data.bankAccountName,
             bankNumber: data.bankNumber
         };
         return userInfo;
@@ -155,16 +157,16 @@ const SettingProfile: React.FC = () => {
             </Menu> */}
             <div className='container-fluid'>
                 <Form form={form} layout='horizontal' name='detail' onFinish={onSave}>
-                    <Modal title="Change Password" visible={!isDisabledModel} onCancel={() => setIsDisabledModel(true)} footer={[
+                    <Modal title="เปลี่ยนรหัสผ่าน" visible={!isDisabledModel} onCancel={() => setIsDisabledModel(true)} footer={[
                         <Button key="submit" type="primary" onClick={onChangePassword}>
-                            change password
+                            เปลี่ยนรหัสผ่าน
                         </Button>,
                     ]}>
                         <Row>
                             <Col  {...formModelLayout}>
                                 <Form.Item
                                     {...inputGroupModel}
-                                    label='new password'
+                                    label='รหัสผ่านใหม่'
                                     name='newPassword'>
                                     <Input.Password id='newPassword' />
                                 </Form.Item>
@@ -174,7 +176,7 @@ const SettingProfile: React.FC = () => {
                             <Col  {...formModelLayout}>
                                 <Form.Item
                                     {...inputGroupModel}
-                                    label='confirm password'
+                                    label='ยืนยันรหัสผ่านใหม่'
                                     name='confirmPassword'>
                                     <Input.Password id='confirmPassword' />
                                 </Form.Item>
@@ -186,7 +188,7 @@ const SettingProfile: React.FC = () => {
                             <Col {...formLeftLayout}>
                                 <Form.Item
                                     {...inputGroupLayout}
-                                    label='name'
+                                    label='ชื่อ'
                                     name='name'>
                                     <Input id='name' />
                                 </Form.Item>
@@ -194,7 +196,7 @@ const SettingProfile: React.FC = () => {
                             <Col {...formRightLayout}>
                                 <Form.Item
                                     {...inputGroupLayout}
-                                    label='lastname'
+                                    label='นามสกุล'
                                     name='lastname'>
                                     <Input id='lastname' />
                                 </Form.Item>
@@ -204,7 +206,7 @@ const SettingProfile: React.FC = () => {
                             <Col {...formLeftLayout}>
                                 <Form.Item
                                     {...inputGroupLayout}
-                                    label='username'
+                                    label='ชื่อผู้ใช้งาน'
                                     name='username'>
                                     <Input id='username' />
                                 </Form.Item>
@@ -212,9 +214,9 @@ const SettingProfile: React.FC = () => {
                             <Col {...formRightLayout} >
                                 <Form.Item
                                     {...inputGroupLayout}
-                                    label='password'
+                                    label='รหัสผ่าน'
                                     name='password'>
-                                    <a onClick={() => onShowModelChangePassword()}>change password</a>
+                                    <a onClick={() => onShowModelChangePassword()}>เปลี่ยนรหัสผ่าน</a>
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -222,7 +224,7 @@ const SettingProfile: React.FC = () => {
                             <Col {...formLeftLayout}>
                                 <Form.Item
                                     {...inputGroupLayout}
-                                    label='telephone number'
+                                    label='เบอร์โทรศัพท์'
                                     name='telephoneNumber'>
                                     <Input id='telephoneNumber' />
                                 </Form.Item>
@@ -230,17 +232,25 @@ const SettingProfile: React.FC = () => {
                             <Col {...formRightLayout}>
                                 <Form.Item
                                     {...inputGroupLayout}
-                                    label='bank name'
+                                    label='ชื่อธนาคาร'
                                     name='bankName'>
                                     <Input id='bankName' />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row>
+                            <Col {...formLeftLayout}>
+                                <Form.Item
+                                    {...inputGroupLayout}
+                                    label='ชื่อบัญชีธนาคาร'
+                                    name='bankAccountName'>
+                                    <Input id='bankAccountName' />
+                                </Form.Item>
+                            </Col>
                             <Col {...formRightLayout}>
                                 <Form.Item
                                     {...inputGroupLayout}
-                                    label='bank number'
+                                    label='เลขบัญชี'
                                     name='bankNumber'>
                                     <Input id='bankNumber' />
                                 </Form.Item>
@@ -248,7 +258,7 @@ const SettingProfile: React.FC = () => {
                         </Row>
                         <div className="bottom-action">
                             <Button id="save" type="primary" htmlType="submit">
-                                save
+                                บันทึก
                             </Button>
                         </div>
                     </Card>

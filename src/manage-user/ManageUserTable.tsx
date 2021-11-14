@@ -11,7 +11,6 @@ const initColumns: any[] = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
-    fixed: 'left',
     width: 200,
     sorter: (a: any, b: any) => {
       a = a.name || '';
@@ -23,7 +22,6 @@ const initColumns: any[] = [
     title: 'Lastname',
     dataIndex: 'lastname',
     key: 'lastname',
-    fixed: 'left',
     width: 200,
     sorter: (a: any, b: any) => {
       a = a.lastname || '';
@@ -35,7 +33,6 @@ const initColumns: any[] = [
     title: 'Username',
     dataIndex: 'username',
     key: 'username',
-    fixed: 'left',
     width: 200,
     sorter: (a: any, b: any) => {
       a = a.username || '';

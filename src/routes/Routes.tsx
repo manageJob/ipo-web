@@ -3,6 +3,7 @@ import ValidateToken from '../components/authen/validate-token/ValidateToken'
 import DepositDetail from '../components/deposit-withdraw/DepositDetail'
 import DepositWithdraw from '../components/deposit-withdraw/DepositWithdraw'
 import WithdrawDetail from '../components/deposit-withdraw/WithdrawDetail'
+import ManageTrasaction from '../components/manage-trasaction/ManageTrasaction'
 import ManageUser from '../manage-user/ManageUser'
 import ManageUserDetail from '../manage-user/ManageUserDetail'
 import News from '../news/News'
@@ -21,6 +22,9 @@ const Routes: React.FC = () => {
             </Route>
             <Route key='manageUser' path='/manage-user'>
                 <ManageUser />
+            </Route>
+            <Route key='manageTrasaction' path='/manage-trasaction'>
+                <ManageTrasaction />
             </Route>
             <Route key='depositWithdraw' path='/deposit-withdraw'>
                 <DepositWithdraw />

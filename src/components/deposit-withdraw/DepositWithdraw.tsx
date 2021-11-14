@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import DepositWithdrawTable from './DepositWithdrawTable';
 import './deposit-withdraw.css';
+import GetTransaction from './api/GetTransaction';
 
 const DepositWithdraw: React.FC = () => {
     const history = useHistory();
@@ -14,6 +15,21 @@ const DepositWithdraw: React.FC = () => {
     const onNewDeposit = () => history.push('/deposit-detail');
 
     const onNewWithdraw = () => history.push('/withdraw-detail');
+
+    useEffect(() => {
+        getTransaction();
+    }, [])
+
+    const getTransaction = () => {
+        const userId = localStorage.getItem('userId');
+        GetTransaction(userId)
+        .then((res: any) => {
+          setDataTable(res?.data ? res?.data : []);
+        })
+        .catch(() => {
+        });
+    };
+
 
     return (
         <>

@@ -6,7 +6,14 @@ export interface BankDetail {
 
 export interface Transaction {
   accountId: string | null
+  userId: string | null
   amount: number
   type: string
+  transactionTime: Dayjs;
+}
+export interface TransactionDetail {
+  amount: number
+  type: string
+  status: string
   transactionTime: Dayjs;
 }

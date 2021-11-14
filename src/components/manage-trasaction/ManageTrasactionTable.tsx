@@ -1,19 +1,44 @@
-import { DeleteOutlined } from '@ant-design/icons';
+import { CheckOutlined } from '@ant-design/icons';
 import { Button, Modal, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Resizable } from 'react-resizable';
+import UpdateTransaction from './api/UpdateTransaction';
+// import DeleteManageUser from './api/DeleteManageUser';
 
 const initColumns: any[] = [
   {
-    title: 'ประเภทธุรกรรม',
-    dataIndex: 'type',
-    key: 'type',
-    width: 300,
+    title: 'ชื่อธนาคาร',
+    dataIndex: 'bankName',
+    key: 'bankName',
+    width: 100,
     sorter: (a: any, b: any) => {
-      a = a.type || '';
-      b = b.type || '';
+      a = a.bankName || '';
+      b = b.bankName || '';
+      return a.localeCompare(b);
+    },
+  },
+  {
+    title: 'ชื่อบัญชีธนาคาร',
+    dataIndex: 'bankAccountName',
+    key: 'bankAccountName',
+   
+    width: 100,
+    sorter: (a: any, b: any) => {
+      a = a.bankAccountName || '';
+      b = b.bankAccountName || '';
+      return a.localeCompare(b);
+    },
+  },
+  {
+    title: 'เลขบัญชี',
+    dataIndex: 'bankNumber',
+    key: 'bankNumber',
+    width: 100,
+    sorter: (a: any, b: any) => {
+      a = a.bankNumber || '';
+      b = b.bankNumber || '';
       return a.localeCompare(b);
     },
   },
@@ -21,7 +46,7 @@ const initColumns: any[] = [
     title: 'ยอดธุรกรรม',
     dataIndex: 'amount',
     key: 'amount',
-    width: 300,
+    width: 100,
     sorter: (a: any, b: any) => {
       a = a.amount || '';
       b = b.amount || '';
@@ -29,10 +54,22 @@ const initColumns: any[] = [
     },
   },
   {
+    title: 'ประเภทธุรกรรม',
+    dataIndex: 'type',
+    key: 'type',
+    width: 100,
+    sorter: (a: any, b: any) => {
+      a = a.type || '';
+      b = b.type || '';
+      return a.localeCompare(b);
+    },
+  },
+  {
     title: 'สถานะ',
     dataIndex: 'status',
     key: 'status',
-    width: 300,
+    width: 100,
+    fixed: 'right',
     sorter: (a: any, b: any) => {
       a = a.status || '';
       b = b.status || '';
@@ -68,12 +105,13 @@ function ResizableTitle(props: any) {
   );
 }
 
-function DepositWithdrawTable(props: {
+function ManageTrasactionTable(props: {
   data: any[];
   isEditable: boolean;
+  onUpdateTrasaction: Function;
 }) {
   const [columns, setColumns] = useState(initColumns);
-  const { data, isEditable } = props;
+  const { data, isEditable, onUpdateTrasaction } = props;
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([]);
   const [selectedDeleteData, setSelectedDeleteData] = useState<any[]>([]);
@@ -108,6 +146,31 @@ function DepositWithdrawTable(props: {
     setCurrentPage(page ? page : 1);
   };
 
+  const onConfirmDelete = () => {
+    confirm({
+      title: 'คุณต้องการยืนยันธุรกรรมหรือไม่?',
+      onOk() {
+        return new Promise((resolve, reject) => {
+          setProgress(20);
+          UpdateTransaction(selectedDeleteData)
+            .then(resolve)
+            .catch((err: any) => reject(err));
+        })
+          .then(() => {
+            setProgress(100);
+            notifySuccess();
+            onUpdateTrasaction();
+            setSelectedDeleteData([]);
+            setSelectedRowKeys([]);
+          })
+          .catch((err) => {
+            setProgress(100);
+            notifyError(err.data.errorMessage);
+          });
+      },
+    });
+  };
+
   const notifySuccess = (message?: string) =>
     toast.success(message || 'Successful');
   const notifyError = (message?: string) =>
@@ -115,6 +178,19 @@ function DepositWithdrawTable(props: {
 
   return (
     <div className="margin-top" style={{ margin: 30, height: '100%' }}>
+      {isEditable && (
+        <div className="button-delete">
+          <Button
+            type="primary"
+            icon={<CheckOutlined />}
+        
+            onClick={onConfirmDelete}
+            disabled={data.length === 0 || selectedDeleteData.length === 0}
+          >
+            ยืนยันธุรกรรม
+          </Button>
+        </div>
+      )}
         <Table
           key={1}
           dataSource={data}
@@ -158,7 +234,7 @@ function DepositWithdrawTable(props: {
           scroll={{ x: 1300 }}
           onRow={(r) => ({
             onClick: () => {
-            //  history.push(`/manage-user-detail`, { id: r.id });
+              history.push(`/manage-user-detail`, { id: r.id });
             },
           })}
         />
@@ -166,4 +242,4 @@ function DepositWithdrawTable(props: {
   );
 }
 
-export default DepositWithdrawTable;
+export default ManageTrasactionTable;

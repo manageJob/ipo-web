@@ -23,8 +23,10 @@ const WithdrawDetail: React.FC = () => {
 
     const prepareData = (data: any) => {
         const accountId = localStorage.getItem('accountId');
+        const userId = localStorage.getItem('userId');
         const transaction: Transaction = {
             accountId: accountId,
+            userId: userId,
             amount: data.withdrawAmount,
             type: "Withdraw",
             transactionTime: dayjs(new Date())

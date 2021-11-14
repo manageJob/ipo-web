@@ -10,8 +10,7 @@ const initColumns: any[] = [
   {
     title: 'Name',
     dataIndex: 'name',
-    key: 'name',
-    fixed: 'left',
+    key: 'name',   
     width: 100,
     sorter: (a: any, b: any) => {
       a = a.name || '';

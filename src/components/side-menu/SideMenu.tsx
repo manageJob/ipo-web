@@ -1,4 +1,4 @@
-import { HomeOutlined, SettingOutlined, UserOutlined, FileTextOutlined, DollarOutlined } from '@ant-design/icons'
+import { CalculatorOutlined, SettingOutlined, UserOutlined, FileTextOutlined, DollarOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -31,7 +31,7 @@ const SideMenu: React.FC = () => {
         key='news'
         icon={<FileTextOutlined />}
         onClick={() => onClickMenu('news')}>
-        <label className="text-sm">News</label>
+        <label className="text-sm">ข่าวการลงทุน</label>
       </Menu.Item>
       <Menu.Item
         key='deposit-withdraw'
@@ -40,16 +40,22 @@ const SideMenu: React.FC = () => {
         <label className="text-sm">ฝาก/ถอน</label>
       </Menu.Item>
       <Menu.Item
+        key='manage-trasaction'
+        icon={<CalculatorOutlined />}
+        onClick={() => onClickMenu('manage-trasaction')}>
+        <label className="text-sm">จัดการธุรกรรม</label>
+      </Menu.Item>
+      <Menu.Item
         key='manage-user'
         icon={<UserOutlined />}
         onClick={() => onClickMenu('manage-user')}>
-        <label className="text-sm">Manage User</label>
+        <label className="text-sm">จัดการสมาชิก</label>
       </Menu.Item>
       <Menu.Item
         key='setting'
         icon={<SettingOutlined />}
         onClick={() => onClickMenu('setting')}>
-        <label className="text-sm">Setting</label>
+        <label className="text-sm">ตั้งค่า</label>
       </Menu.Item>
     </Menu>
   )

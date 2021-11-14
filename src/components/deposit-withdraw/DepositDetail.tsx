@@ -32,8 +32,10 @@ const DepositDetail: React.FC = () => {
     }, [])
 
     const prepareData = (data: any) => {
+        const userId = localStorage.getItem('userId');
         const transaction: Transaction = {
             accountId: data.toBank,
+            userId: userId,
             amount: data.depositAmount,
             type: "Deposit",
             transactionTime: data.transactionTime

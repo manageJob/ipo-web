@@ -1,4 +1,4 @@
-import { Alert, Button, Card, Form, Input, notification, Row, Spin } from "antd"
+import { Button, Card, Form, Input, notification, Row } from "antd"
 import { useForm } from "antd/lib/form/Form";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './login.css';
@@ -6,7 +6,6 @@ import { useState } from "react";
 import { BrowserRouter as Router } from 'react-router-dom';
 import Layout from "../components/layout/Layout";
 import ContextProvider from "../context/ContextItems";
-import { ToastContainer } from 'react-toastify';
 import Routes from "../routes/Routes";
 import Authenticate from "./api/Authenticate";
 
@@ -25,6 +24,7 @@ const Login: React.FC = () => {
         }
         localStorage.setItem(`ipoToken`, JSON.stringify(dataToken));
         localStorage.setItem(`userId`, accessToken.userId);
+        localStorage.setItem(`accountId`, accessToken.accountId);
         setIsLogin(true);
     }
 

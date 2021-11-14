@@ -43,7 +43,6 @@ const SettingProfile: React.FC = () => {
 
                 });
         }
-
     }
 
     const populateData = (data: Setting) => {

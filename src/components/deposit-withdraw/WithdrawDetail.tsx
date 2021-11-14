@@ -3,10 +3,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'antd/lib/form/Form';
 import Axios from 'axios';
 import { useHistory, useLocation } from 'react-router-dom';
+import { default as dayjs, default as format } from 'dayjs';
 import { formLeftLayout, formRightLayout, inputGroupLayout } from './DepositWithdrawLayout';
 import { DropDrown } from '../../models/DropDrown.model';
 import { ContextItems } from '../../context/ContextItems';
 import { User } from '../../manage-user/manage-user.model';
+import AddTransaction from './api/AddTransaction';
+import { Transaction } from './deposit-withdraw.model';
 
 
 const WithdrawDetail: React.FC = () => {
@@ -18,59 +21,38 @@ const WithdrawDetail: React.FC = () => {
     const [form] = useForm();
     const history = useHistory();
 
-
-    useEffect(() => {
-        // Axios.all([GetRole()])
-        //     .then(
-        //         Axios.spread((...res) => {
-        //             setRole(res[0]?.data ? res[0].data : []);
-        //         })
-        //     )
-        //     .catch((errors) => {
-        //         openNotificationError('failed')
-        //     });
-    }, [])
-
-    const populateData = (data: User) => {
-        form.setFieldsValue({
-            username: data.username,
-            role: data.roleId,
-        });
-    };
-
     const prepareData = (data: any) => {
-        const userInfo: User = {
-            username: data.username,
-            roleId: data.role
+        const accountId = localStorage.getItem('accountId');
+        const transaction: Transaction = {
+            accountId: accountId,
+            amount: data.withdrawAmount,
+            type: "Withdraw",
+            transactionTime: dayjs(new Date())
         };
-        return userInfo;
+        return transaction;
+
     };
 
     const onSave = (data: any) => {
-            confirm({
-                title: 'Do you want to new this user?',
-                onOk() {
-                    // return new Promise((resolve, reject) => {
-                    //     AddManageUser(prepareData(data))
-                    //         .then(resolve)
-                    //         .catch((err) => reject(err));
-                    // })
-                    //     .then(() => {
-                    //         openNotificationSuccess();
-                    //         history.push('manage-user');
-                    //     })
-                    //     .catch((err) => {
-                    //         openNotificationError('failed');
-                    //     });
-                },
-                onCancel() { },
-            });
+        confirm({
+            title: 'คุณต้องการบันทึกหรือไม่?',
+            onOk() {
+                return new Promise((resolve, reject) => {
+                    AddTransaction(prepareData(data))
+                        .then(resolve)
+                        .catch((err) => reject(err));
+                })
+                    .then(() => {
+                        openNotificationSuccess();
+                        history.push('deposit-withdraw');
+                    })
+                    .catch((err) => {
+                        openNotificationError('failed');
+                    });
+            },
+            onCancel() { },
+        });
     }
-
-    const onShowModelChangePassword = () => {
-        setIsDisabledModel(false);
-    }
-
 
     const openNotificationSuccess = () => {
         notification['success']({
@@ -91,8 +73,8 @@ const WithdrawDetail: React.FC = () => {
         <>
             <div className='container-fluid'>
                 <Form form={form} layout='horizontal' name='detail' onFinish={onSave}>
-                    <Card title={ "ถอน" } bordered={false} style={{ margin: 30, height: '100%' }}>
-                    <Row>
+                    <Card title={"ถอน"} bordered={false} style={{ margin: 30, height: '100%' }}>
+                        <Row>
                             <Col {...formLeftLayout}>
                                 <Form.Item
                                     {...inputGroupLayout}

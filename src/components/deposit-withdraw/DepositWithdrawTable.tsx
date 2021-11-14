@@ -18,7 +18,7 @@ const initColumns: any[] = [
     },
   },
   {
-    title: 'จำนวน',
+    title: 'ยอดเงิน',
     dataIndex: 'amount',
     key: 'amount',
     width: 300,

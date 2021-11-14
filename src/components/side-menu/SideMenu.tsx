@@ -7,12 +7,12 @@ import './side-menu.css'
 const SideMenu: React.FC = () => {
   const location = useLocation()
   const history = useHistory()
-  const [defaultSelectKey] = useState(location.pathname.split('/')[1] || 'main')
+  const [defaultSelectKey] = useState(location.pathname.split('/')[1] || 'news')
 
   useEffect(() => {
     const path: string[] = location.pathname.split('/')
     if (!path[1]) {
-      history.push('/main')
+      history.push('/news')
     }
 
   }, [location.pathname]) // eslint-disable-line
@@ -27,12 +27,6 @@ const SideMenu: React.FC = () => {
       mode='inline'
       style={{ height: '100%', borderRight: 0 }}
     >
-      <Menu.Item
-        key='main'
-        onClick={() => onClickMenu('main')}
-        icon={<HomeOutlined />}>
-        <label className="text-sm">Main</label>
-      </Menu.Item>
       <Menu.Item
         key='news'
         icon={<FileTextOutlined />}

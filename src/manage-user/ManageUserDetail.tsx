@@ -25,7 +25,6 @@ const ManageUserDetail: React.FC = () => {
 
 
     useEffect(() => {
-        // setBreadcrumbItems(breadcrumb)
         Axios.all([GetRole()])
             .then(
                 Axios.spread((...res) => {

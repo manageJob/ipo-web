@@ -1,21 +1,17 @@
-import { AutoComplete, Button, Card, Col, DatePicker, Form, Input, Modal, notification, Popconfirm, Row, Select } from 'antd';
-import React, { useContext, useEffect, useState } from 'react';
+import { Button, Card, Col, DatePicker, Form, Input, Modal, notification, Row, Select } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'antd/lib/form/Form';
 import Axios from 'axios';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { formLeftLayout, formRightLayout, inputGroupLayout } from './DepositWithdrawLayout';
 import { DropDrown } from '../../models/DropDrown.model';
-import { ContextItems } from '../../context/ContextItems';
-import { User } from '../../manage-user/manage-user.model';
 import { default as dayjs, default as format } from 'dayjs';
 import GetAccount from './api/GetAccount';
 import getBankDetail from './api/GetManageUser';
-
+import { Transaction } from './deposit-withdraw.model';
+import AddTransaction from './api/AddTransaction';
 
 const DepositDetail: React.FC = () => {
-    const { setBreadcrumbItems } = useContext(ContextItems);
-    const [isDisabledModel, setIsDisabledModel] = useState(true);
-    const [userId, setUserId] = useState<any | null>(null);
     const [account, setAccount] = useState<DropDrown[]>([]);
     const confirm = Modal.confirm;
     const [form] = useForm();
@@ -35,44 +31,35 @@ const DepositDetail: React.FC = () => {
             });
     }, [])
 
-    const populateData = (data: User) => {
-        form.setFieldsValue({
-            username: data.username,
-            role: data.roleId,
-        });
-    };
-
     const prepareData = (data: any) => {
-        const userInfo: User = {
-            username: data.username,
-            roleId: data.role
+        const transaction: Transaction = {
+            accountId: data.toBank,
+            amount: data.depositAmount,
+            type: "Deposit",
+            transactionTime: data.transactionTime
         };
-        return userInfo;
+        return transaction;
     };
 
     const onSave = (data: any) => {
         confirm({
-            title: 'Do you want to new this user?',
+            title: 'คุณต้องการบันทึกหรือไม่?',
             onOk() {
-                // return new Promise((resolve, reject) => {
-                //     AddManageUser(prepareData(data))
-                //         .then(resolve)
-                //         .catch((err) => reject(err));
-                // })
-                //     .then(() => {
-                //         openNotificationSuccess();
-                //         history.push('manage-user');
-                //     })
-                //     .catch((err) => {
-                //         openNotificationError('failed');
-                //     });
+                return new Promise((resolve, reject) => {
+                    AddTransaction(prepareData(data))
+                        .then(resolve)
+                        .catch((err) => reject(err));
+                })
+                    .then(() => {
+                        openNotificationSuccess();
+                        history.push('deposit-withdraw');
+                    })
+                    .catch((err) => {
+                        openNotificationError('failed');
+                    });
             },
             onCancel() { },
         });
-    }
-
-    const onShowModelChangePassword = () => {
-        setIsDisabledModel(false);
     }
 
 
@@ -101,14 +88,12 @@ const DepositDetail: React.FC = () => {
             getBankDetail(idAccount)
             .then((res: any) => {
                setBankDetail(res?.data?.bankName + ' เลขบัญชี: ' + res?.data?.bankNumber);
-                 
             })
             .catch((err) => {
                 openNotificationError('failed')
             });
         } 
     }
-
 
     const clearDateil = () => {
        setBankDetail(null);
@@ -148,7 +133,6 @@ const DepositDetail: React.FC = () => {
                                     label='ธนาคาร'
                                     name="accountDetail"
                                     hidden={bankDetail === null}
-                                //  initialValue={format()}
                                 >
                                      {bankDetail}
                                 </Form.Item>
@@ -174,8 +158,7 @@ const DepositDetail: React.FC = () => {
                                 <Form.Item
                                     {...inputGroupLayout}
                                     label='เวลาฝาก'
-                                    name="timeDeposit"
-                                    //  initialValue={format()}
+                                    name="transactionTime"
                                     rules={[
                                         {
                                             required: true,
@@ -183,19 +166,17 @@ const DepositDetail: React.FC = () => {
                                         },
                                     ]}>
                                     <DatePicker
-                                        id="timeDeposit"
-                                        // onChange={onChangeEffectiveDateFrom}
+                                        id="transactionTime"
                                         format="YYYY-MM-DD HH:mm"
-                                        name="timeDeposit"
+                                        name="transactionTime"
                                         showTime
                                     />
                                 </Form.Item>
                             </Col>
                         </Row>
-
                         <div className="bottom-action">
                             <Button id="save" type="primary" htmlType="submit">
-                                save
+                                บันทึก
                             </Button>
                         </div>
                     </Card>

@@ -1,4 +1,4 @@
-import { CheckOutlined } from '@ant-design/icons';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Modal, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -146,13 +146,14 @@ function ManageTrasactionTable(props: {
     setCurrentPage(page ? page : 1);
   };
 
-  const onConfirmDelete = () => {
+  const onConfirmAction = (action: string) => {
+  
     confirm({
-      title: 'คุณต้องการยืนยันธุรกรรมหรือไม่?',
+      title: 'คุณต้องการจัดการธุรกรรมหรือไม่?',
       onOk() {
         return new Promise((resolve, reject) => {
           setProgress(20);
-          UpdateTransaction(selectedDeleteData)
+          UpdateTransaction(action, selectedDeleteData)
             .then(resolve)
             .catch((err: any) => reject(err));
         })
@@ -179,12 +180,21 @@ function ManageTrasactionTable(props: {
   return (
     <div className="margin-top" style={{ margin: 30, height: '100%' }}>
       {isEditable && (
-        <div className="button-delete">
+        <div className="button-action">
+           <Button
+            style={{marginRight:10}}
+            type="primary"
+            danger
+            icon={<CloseOutlined />}
+            onClick={() => onConfirmAction('Reject')}
+            disabled={data.length === 0 || selectedDeleteData.length === 0}
+          >
+            ปฏิเสธธุรกรรม
+          </Button>
           <Button
             type="primary"
             icon={<CheckOutlined />}
-        
-            onClick={onConfirmDelete}
+            onClick={() => onConfirmAction('Approval')}
             disabled={data.length === 0 || selectedDeleteData.length === 0}
           >
             ยืนยันธุรกรรม
@@ -234,7 +244,7 @@ function ManageTrasactionTable(props: {
           scroll={{ x: 1300 }}
           onRow={(r) => ({
             onClick: () => {
-              history.push(`/manage-user-detail`, { id: r.id });
+           //   history.push(`/manage-user-detail`, { id: r.id });
             },
           })}
         />
